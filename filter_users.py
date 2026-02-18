@@ -12,11 +12,26 @@ def filter_by_name(users, query):
     q = query.strip().lower()
     return [u for u in users if q in u["name"].lower()]
 
+def filter_by_age(users, min_age):
+    """Return users whose age is greater or equal to min_age."""
+    return [u for u in users if u["age"] >= min_age]
+
 
 def main():
     users = load_users()
-    query = input("Enter name to search: ").strip()
-    matches = filter_by_name(users, query)
+    choice = input("Filter by (1) name or (2) age? ").strip()
+
+    if choice == "1":
+        query = input("Enter name to search: ").strip()
+        matches = filter_by_name(users, query)
+
+    elif choice == "2":
+        min_age = int(input("Enter minimum age: ").strip())
+        matches = filter_by_age(users, min_age)
+
+    else:
+        print("Invalid choice.")
+        return
 
     if not matches:
         print("No user found.")
